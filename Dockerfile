@@ -13,8 +13,8 @@ RUN --mount=type=secret,id=DB_HOST \
     --mount=type=secret,id=JWT_SECRET \
     export DB_HOST=$(cat /run/secrets/DB_HOST) && \
     export DB_NAME=$(cat /run/secrets/DB_NAME) && \
-    export DB_PASS=$(cat /run/secrets/DB_PASS && \
-    export DB_PORT=$(cat /run/secrets/DB_PORT && \
+    export DB_PASS=$(cat /run/secrets/DB_PASS) && \
+    export DB_PORT=$(cat /run/secrets/DB_PORT) && \
     export DB_USER=$(cat /run/secrets/DB_USER) && \
     export EXPIRES_IN=$(cat /run/secrets/EXPIRES_IN) && \
     export JWT_SECRET=$(cat /run/secrets/JWT_SECRET)
