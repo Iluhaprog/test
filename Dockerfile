@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY . .
 
+RUN ls -l /run
+RUN ls -la /run/secrets
+
 RUN --mount=type=secret,id=DB_HOST \
     --mount=type=secret,id=DB_NAME \
     --mount=type=secret,id=DB_PASS \

@@ -47,11 +47,11 @@ jobs:
         push: true
         tags: ${{secrets.DOCKERHUB_USERNAME}}/test-gha-back
         secrets: |
-          "DB_HOST=${{secrets.DB_HOST}}"
-          "DB_NAME=${{secrets.DB_NAME}}"
-          "DB_PASS=${{secrets.DB_PASS}}"
-          "DB_PORT=${{secrets.DB_PORT}}"
-          "DB_USER=${{secrets.DB_USER}}"
-          "EXPIRES_ID=${{secrets.EXPIRES_ID}}"
-          "JWT_SECRET=${{secrets.SECRET}}"
+          DB_HOST=${{secrets.DB_HOST}}
+          DB_NAME=${{secrets.DB_NAME}}
+          DB_PASS=${{secrets.DB_PASS}}
+          DB_PORT=${{secrets.DB_PORT}}
+          DB_USER=${{secrets.DB_USER}}
+          EXPIRES_IN=${{secrets.EXPIRES_IN}}
+          JWT_SECRET=${{secrets.JWT_SECRET}}
 
