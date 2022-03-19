@@ -22,7 +22,6 @@ RUN --mount=type=secret,id=DB_HOST \
     export EXPIRES_IN=$(cat /run/secrets/EXPIRES_IN) && \
     export JWT_SECRET=$(cat /run/secrets/JWT_SECRET)
 
-RUN ls /run/secrets
 RUN printenv 
 
 RUN npm install -g npm@8.5.4
