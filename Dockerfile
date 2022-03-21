@@ -4,9 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN ls -l /run
-RUN ls -la /run/secrets
-
 RUN --mount=type=secret,id=DB_HOST \
     --mount=type=secret,id=DB_NAME \
     --mount=type=secret,id=DB_PASS \
@@ -21,6 +18,8 @@ RUN --mount=type=secret,id=DB_HOST \
     export DB_USER=$(cat /run/secrets/DB_USER) && \
     export EXPIRES_IN=$(cat /run/secrets/EXPIRES_IN) && \
     export JWT_SECRET=$(cat /run/secrets/JWT_SECRET)
+    
+RUN ls -la /run/secrets
 
 RUN printenv 
 
