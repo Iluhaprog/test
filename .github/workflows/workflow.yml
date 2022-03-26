@@ -17,7 +17,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
-        options:
+        options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
@@ -46,7 +46,7 @@ jobs:
         POSTGRES_DB: postgres
         POSTGRES_USERNAME: postgres
         POSTGRES_PASSWORD: postgres
-        POSTGRES_HOST: postgres
+        POSTGRES_HOST: localhost
         POSTGRES_PORT: 5432
       if: always()
       run:
