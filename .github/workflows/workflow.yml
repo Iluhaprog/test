@@ -10,48 +10,40 @@ jobs:
     runs-on: ubuntu-latest
     name: Checks
 
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: ${{ secrets.TEST_POSTGRES_DB }}
+          POSTGRES_USERNAME: ${{ secrets.TEST_POSTGRES_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.TEST_POSTGRES_PASSWORD }}
+        ports:
+          - 5432:5432
+
     steps:
     - uses: actions/checkout@v2
+    
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '16'
+
     - name: Install deps
       run: yarn install
+
     - name: Check with eslint
       run: yarn lint
+
     - name: Run tests
       if: always()
       run: yarn test
+
     - name: Run e2e tests
+      env:
+        POSTGRES_DB: ${{ secrets.TEST_POSTGRES_DB }}
+        POSTGRES_USERNAME: ${{ secrets.TEST_POSTGRES_USERNAME }}
+        POSTGRES_PASSWORD: ${{ secrets.TEST_POSTGRES_PASSWORD }}
+        POSTGRES_HOST: 127.0.0.1
+        POSTGRES_PORT: 5432
       if: always()
       run: yarn test:e2e
-  deploy:
-    runs-on: ubuntu-latest
-    name: Deploy
-    
-    needs: [test]
-    
-    steps: 
-    - name: Checkout repo
-      uses: actions/checkout@v2
-    - name: Login to docker
-      uses: docker/login-action@v1 
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-    - name: Build and Push
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        tags: ${{secrets.DOCKERHUB_USERNAME}}/test-gha-back
-        secrets: |
-          DB_HOST=${{secrets.DB_HOST}}
-          DB_NAME=${{secrets.DB_NAME}}
-          DB_PASS=${{secrets.DB_PASS}}
-          DB_PORT=${{secrets.DB_PORT}}
-          DB_USER=${{secrets.DB_USER}}
-          EXPIRES_IN=${{secrets.EXPIRES_IN}}
-          JWT_SECRET=${{secrets.JWT_SECRET}}
-
