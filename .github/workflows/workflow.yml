@@ -14,11 +14,16 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: ${{ secrets.TEST_POSTGRES_DB }}
-          POSTGRES_USERNAME: ${{ secrets.TEST_POSTGRES_USERNAME }}
-          POSTGRES_PASSWORD: ${{ secrets.TEST_POSTGRES_PASSWORD }}
+          POSTGRES_DB: test_db
+          POSTGRES_USERNAME: test_username
+          POSTGRES_PASSWORD: test_password
         ports:
           - 5432:5432
+        options:
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
@@ -40,9 +45,9 @@ jobs:
 
     - name: Run e2e tests
       env:
-        POSTGRES_DB: ${{ secrets.TEST_POSTGRES_DB }}
-        POSTGRES_USERNAME: ${{ secrets.TEST_POSTGRES_USERNAME }}
-        POSTGRES_PASSWORD: ${{ secrets.TEST_POSTGRES_PASSWORD }}
+        POSTGRES_DB: test_db
+        POSTGRES_USERNAME: test_username
+        POSTGRES_PASSWORD: test_password
         POSTGRES_HOST: 127.0.0.1
         POSTGRES_PORT: 5432
       if: always()
