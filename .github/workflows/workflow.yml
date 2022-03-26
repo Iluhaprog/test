@@ -46,4 +46,7 @@ jobs:
         POSTGRES_HOST: 127.0.0.1
         POSTGRES_PORT: 5432
       if: always()
+      run: echo $POSTGRES_DB
+      run: echo $POSTGRES_USERNAME
+      run: echo $POSTGRES_PASSWORD
       run: yarn test:e2e
